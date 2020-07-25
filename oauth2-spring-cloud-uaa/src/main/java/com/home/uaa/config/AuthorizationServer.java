@@ -12,15 +12,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-
-import javax.sql.DataSource;
 
 /**
  * @author liqingdong
@@ -32,7 +28,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private TokenStore tokenStore;
-    /** 客户端详情服务, 相当于ClientDetailsServiceConfigurer的配置 */
+    /**
+     * 客户端详情服务, 相当于ClientDetailsServiceConfigurer的配置
+     */
     @Autowired
     private ClientDetailsService clientDetailsService;
     @Autowired
@@ -45,16 +43,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         //设置授权码模式的授权码如何存取
         return new InMemoryAuthorizationCodeServices();
     }
+
     /**
      * 配置客户端服务, 用来认证客户端是否合法
-     *
-     * @param clients
-     * @throws Exception
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 自定义
-//        clients.withClientDetails(ClientdetilsService)
         clients.inMemory()
                 // 标识客户ID
                 .withClient("c1")
@@ -72,13 +67,12 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .scopes("all")
                 // 授权码模式, false会跳转到授权页面进行授权
                 // true不跳转授权页面, 直接发放令牌
-                .autoApprove(false)
+                .autoApprove(true)
                 .redirectUris("http://www.baidu.com");
     }
 
     /**
      * 令牌管理服务, 任何模式都需要配置
-     * @return
      */
     @Bean
     public AuthorizationServerTokenServices tokenServices() {
@@ -98,12 +92,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     /**
      * 配置令牌断点的安全约束
-     *
-     * @param endpoints
-     * @throws Exception
      */
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 // 密码模式需要
                 .authenticationManager(authenticationManager)
@@ -117,9 +108,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     /**
      * 令牌访问端点的策略
-     *
-     * @param security
-     * @throws Exception
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
