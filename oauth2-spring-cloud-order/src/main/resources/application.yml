@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: order-server
+  main:
+    allow-bean-definition-overriding: true # 允许bean定义覆盖
+  http:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+  freemarker:
+    enabled: true
+    suffix: .html
+    request-context-attribute: rc
+    content-type: text/html
+    charset: UTF-8
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+server:
+  port: 8081
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
+  use-forward-headers: true
+  servlet:
+    context-path: /order
+#日志
+logging:
+  level:
+    root: debug
+    org:
+      springframework:
+        web: info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,env
+
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types:
+        - text/xml
+        - application/json
+        - application/xml
+      min-request-size: 2048
+    response:
+      enabled: true
