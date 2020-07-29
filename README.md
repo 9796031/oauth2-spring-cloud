@@ -68,4 +68,5 @@ OrderController类
 
 通过```localhost:53021/order/r1```访问资源,测试通过  
 **注意, 请求头信息需要携带token信息**
-![image](https://note.youdao.com/yws/public/resource/13db7cffb0296d27a93c782ac9c77de2/xmlnote/16CF25BCA14C49C0BDD10D8FBEA7CD33/12767)
+key:Authorization  
+value:Bearer token
