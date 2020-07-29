@@ -19,7 +19,7 @@ spring:
   resources:
     add-mappings: false
 server:
-  port: 8081
+  port: 53021
   tomcat:
     remote-ip-header: x-forwarded-for
     protocol-header: x-forwarded-proto

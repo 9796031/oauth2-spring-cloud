@@ -103,7 +103,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 令牌管理服务
                 .tokenServices(tokenServices())
                 // 允许post提交获取令牌
-                .allowedTokenEndpointRequestMethods(HttpMethod.POST);
+                .allowedTokenEndpointRequestMethods(HttpMethod.GET);
     }
 
     /**
