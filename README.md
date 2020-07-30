@@ -110,3 +110,27 @@ URL:```http://localhost:53020/uaa/oauth/check_token?token=eyJhbGciOiJIUzI1NiIsIn
 ## 7.3 访问资源
 URL:```localhost:53021/order/r1```  
 资源访问成功
+
+# 8 使用数据库存储客户端信息
+表oauth_client_details存储客户端信息  
+表oauth_code存储客户端生成的code
+
+## 8.1 测试客户端模式(通过数据库存储)
+URL:```localhost:53020/uaa/oauth/token?grant_type=client_credentials&client_id=c1&client_secret=secret```  
+返回结果  
+```$xslt
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsicmVzMSJdLCJzY29wZSI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIiwiUk9MRV9BUEkiXSwiZXhwIjoxNTk2MTMzMjAzLCJqdGkiOiIyMzY0NmFkNy1jNDBkLTRhNDktYWJhYy1hMjE0OWU2MmI3MTEiLCJjbGllbnRfaWQiOiJjMSJ9.RHjz17Wa0S-X_f7I9ZSWk0JajlCXRTkJZ4Fwktw47cQ",
+    "token_type": "bearer",
+    "expires_in": 7199,
+    "scope": "ROLE_ADMIN ROLE_USER ROLE_API",
+    "jti": "23646ad7-c40d-4a49-abac-a2149e62b711"
+}
+```
+## 8.2 测试授权码模式(通过数据库存储)
+URL:```http://localhost:53020/uaa/oauth/authorize?client_id=c1&response_type=code&scope=ROLE_ADMIN&redirect_uri=http://www.baidu.com```  
+登录用户zhangsan 密码123获取code  
+```$xslt
+https://www.baidu.com/?code=UEWZaa
+```
+生成的code会存储在oauth_code表中
