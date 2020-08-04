@@ -10,6 +10,8 @@
     <modules>
         <module>oauth2-spring-cloud-uaa</module>
         <module>oauth2-spring-cloud-order</module>
+        <module>oauth2-spring-cloud-eureka</module>
+        <module>oauth2-spring-cloud-zuul</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

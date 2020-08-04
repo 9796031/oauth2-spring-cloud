@@ -1,5 +1,6 @@
 package com.home.uaa.service;
 
+import com.alibaba.fastjson.JSON;
 import com.home.uaa.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -33,6 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user != null) {
             permission = userDao.getPermissionByUserName(user.getId());
         }
-        return User.withUsername(user.getName()).password(user.getPassword()).authorities(permission).build();
+        String userJson = JSON.toJSONString(user);
+        return User.withUsername(userJson).password(user.getPassword()).authorities(permission).build();
     }
 }

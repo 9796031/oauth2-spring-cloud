@@ -1,6 +1,9 @@
 package com.home.order.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.home.order.entity.UserEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,8 @@ public class OrderController {
     @GetMapping("/r1")
     @PreAuthorize("hasAnyAuthority('p1')")
     public String r1() {
-        return "访问r1资源成功!!!";
+        // 获取当前登录用户信息
+        UserEntity userEntity = (UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return JSON.toJSONString(userEntity) + "访问r1资源成功!!!";
     }
 }

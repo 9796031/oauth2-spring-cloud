@@ -38,7 +38,10 @@ management:
     web:
       exposure:
         include: refresh,health,info,env
-
+eureka:
+  client:
+    service-url: 
+      defaultZone: http://localhost:53000/eureka
 feign:
   hystrix:
     enabled: true

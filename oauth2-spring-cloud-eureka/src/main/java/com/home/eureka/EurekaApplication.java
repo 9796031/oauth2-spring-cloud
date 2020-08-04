@@ -1,18 +1,20 @@
-package com.home.order;
+package com.home.eureka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
  * @author liqingdong
- * 订单服务, 用来校验授权是否有效
+ * 注册重新配置
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-public class OrderServer {
+@EnableEurekaServer
+public class EurekaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OrderServer.class);
+        SpringApplication.run(EurekaApplication.class);
     }
 }

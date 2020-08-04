@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: zuul
+  main:
+    allow-bean-definition-overriding: true
+server:
+  port: 53010
+logging:
+  level:
+    root: info
+    org.springframework: info
+
+zuul:
+  retryable: true
+  ignored-services: "*"
+  add-host-header: true
+  sensitive-headers: "*"
+  routes:
+    uaa-server:
+      stripPrefix: false
+      path: /uaa/**
+    order-server:
+      stripPrefix: false
+      path: /order/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:53000/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipaddress}:${spring.applcation.instance_id}:${server.port}
+    ip-address: 127.0.0.1
+    lease-renewal-interval-in-seconds: 10
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,env
+
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types:
+        - text/html
+        - application/xml
+        - application/json
+      min-request-size: 2048
+    response:
+      enabled: true

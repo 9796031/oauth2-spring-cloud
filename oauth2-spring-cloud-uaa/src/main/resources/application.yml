@@ -1,6 +1,6 @@
 spring:
   application:
-    name: uaa‐service
+    name: uaa-server
   # HTTP编码配置
   http:
     encoding:
@@ -37,10 +37,17 @@ logging:
       springframework:
         web: info
     root: debug
-
-
-  #eureka.client.serviceUrl.defaultZone = http://localhost:53000/eureka/ #eureka.instance.preferIpAddress = true
-  #eureka.instance.instance‐id = ${spring.application.name}:${spring.cloud.client.ip‐ address}:${spring.application.instance_id:${server.port}} management.endpoints.web.exposure.include = refresh,health,info,env
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:53000/eureka #eureka.instance.preferIpAddress = true
+  instance:
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,env
 feign:
   hystrix:
     enabled: true

@@ -48,7 +48,8 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // 所有资源必须有scope=all的权限
-                .antMatchers("/**").access("#oauth2.hasScope('all')")
+                // ROLE_ADMIN 和数据库中的权限保持一致
+                .antMatchers("/**").access("#oauth2.hasScope('ROLE_ADMIN')")
                 .and().csrf().disable()
                 // 基于token方式验证, 不需要使用session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
